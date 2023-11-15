@@ -35,6 +35,11 @@ import static io.appium.uiautomator2.utils.ElementLocationHelpers.findElement;
 import static io.appium.uiautomator2.utils.ModelUtils.toModel;
 import static io.appium.uiautomator2.utils.StringHelpers.isBlank;
 
+import android.util.Log;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FindElement extends SafeRequestHandler {
 
     public FindElement(String mappedUri) {
@@ -62,6 +67,15 @@ public class FindElement extends SafeRequestHandler {
         if (element == null) {
             throw new ElementNotFoundException();
         }
+        Logger.translation("selector: " + selector);
+//        Logger.translation("element info: " + element.getInfo());
+        Pattern textPattern = Pattern.compile("text\\((.*)\\)");
+        Matcher matcher = textPattern.matcher(selector);
+
+        if (matcher.matches()) {
+            Logger.translation(String.format("Espresso: onView(withText(%s))", matcher.group(1)));
+        }
+
         AndroidElement androidElement = elementsCache.add(element, true, by, contextId);
         return new AppiumResponse(getSessionId(request), androidElement.toModel());
     }

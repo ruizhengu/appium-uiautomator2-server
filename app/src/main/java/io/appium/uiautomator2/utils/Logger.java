@@ -18,6 +18,7 @@ package io.appium.uiautomator2.utils;
 
 public class Logger {
     public static final String TAG = "appium";
+    public static final String TRANSLATION_TAG = "translation";
 
     private static String getString(Object... args) {
         StringBuilder content = new StringBuilder();
@@ -74,5 +75,9 @@ public class Logger {
         if (android.util.Log.isLoggable(TAG, android.util.Log.DEBUG)) {
             android.util.Log.d(TAG, getString(messages));
         }
+    }
+
+    public static void translation(Object... messages) {
+        android.util.Log.d(TRANSLATION_TAG, getString(messages));
     }
 }
