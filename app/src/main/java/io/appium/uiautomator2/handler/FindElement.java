@@ -29,6 +29,7 @@ import io.appium.uiautomator2.model.By;
 import io.appium.uiautomator2.model.ElementsCache;
 import io.appium.uiautomator2.model.api.FindElementModel;
 import io.appium.uiautomator2.model.internal.ElementsLookupStrategy;
+import io.appium.uiautomator2.translation.SelectorParser;
 import io.appium.uiautomator2.utils.Logger;
 
 import static io.appium.uiautomator2.utils.ElementLocationHelpers.findElement;
@@ -68,13 +69,10 @@ public class FindElement extends SafeRequestHandler {
             throw new ElementNotFoundException();
         }
         Logger.translation("selector: " + selector);
-//        Logger.translation("element info: " + element.getInfo());
-        Pattern textPattern = Pattern.compile("text\\((.*)\\)");
-        Matcher matcher = textPattern.matcher(selector);
 
-        if (matcher.matches()) {
-            Logger.translation(String.format("Espresso: onView(withText(%s))", matcher.group(1)));
-        }
+        String parsed = SelectorParser.parseSelector(selector);
+
+        Logger.translation(parsed);
 
         AndroidElement androidElement = elementsCache.add(element, true, by, contextId);
         return new AppiumResponse(getSessionId(request), androidElement.toModel());
