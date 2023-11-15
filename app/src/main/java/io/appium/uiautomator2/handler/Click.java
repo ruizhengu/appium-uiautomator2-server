@@ -16,6 +16,8 @@
 
 package io.appium.uiautomator2.handler;
 
+import android.util.Log;
+
 import io.appium.uiautomator2.handler.request.SafeRequestHandler;
 import io.appium.uiautomator2.http.AppiumResponse;
 import io.appium.uiautomator2.http.IHttpRequest;
@@ -34,6 +36,7 @@ public class Click extends SafeRequestHandler {
     protected AppiumResponse safeHandle(IHttpRequest request) {
         Session session = AppiumUIA2Driver.getInstance().getSessionOrThrow();
         AndroidElement element = session.getElementsCache().get(getElementId(request));
+        Log.i("Translation", "this is the click action");
         element.click();
         Device.waitForIdle();
         return new AppiumResponse(getSessionId(request));
