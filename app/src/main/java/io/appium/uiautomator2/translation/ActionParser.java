@@ -7,16 +7,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ActionParser {
+    private static final String MATCHER_KEY = "matcher";
+    private static final String VALUE_KEY = "value";
+    private static final String ACTION_KEY = "action";
 
     public static Map<String, String> parseAction(String by) {
         Map<String, String> element = new HashMap<>();
-        String matcher = "matcher";
-        String value = "value";
-        String action = "action";
         if (parseClick(by) != null) {
-            element.put(matcher, Objects.requireNonNull(parseClick(by)).get("matcher"));
-            element.put(value, Objects.requireNonNull(parseClick(by)).get("value"));
-            element.put(action, "CLICK");
+            element.put(MATCHER_KEY, Objects.requireNonNull(parseClick(by)).get("matcher"));
+            element.put(VALUE_KEY, Objects.requireNonNull(parseClick(by)).get("value"));
+            element.put(ACTION_KEY, "CLICK");
             return element;
         }
         return null;

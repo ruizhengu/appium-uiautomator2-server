@@ -10,14 +10,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SelectorParser {
+    private static final String MATCHER_KEY = "matcher";
+    private static final String VALUE_KEY = "value";
 
     public static Map<String, String> parseSelector(String selector) {
         Map<String, String> element = new HashMap<>();
-        String matcher = "matcher";
-        String value = "value";
         if (parseText(selector) != null) {
-            element.put(matcher, "TEXT");
-            element.put(value, parseText(selector));
+            element.put(MATCHER_KEY, "TEXT");
+            element.put(VALUE_KEY, parseText(selector));
             return element;
         }
         return null;
