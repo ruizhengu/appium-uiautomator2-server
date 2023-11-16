@@ -16,7 +16,7 @@ public class SelectorParser {
         String matcher = "matcher";
         String value = "value";
         if (parseText(selector) != null) {
-            element.put(matcher, "text");
+            element.put(matcher, "TEXT");
             element.put(value, parseText(selector));
             return element;
         }

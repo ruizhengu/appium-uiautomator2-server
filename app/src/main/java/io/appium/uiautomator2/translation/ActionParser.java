@@ -16,7 +16,7 @@ public class ActionParser {
         if (parseClick(by) != null) {
             element.put(matcher, Objects.requireNonNull(parseClick(by)).get("matcher"));
             element.put(value, Objects.requireNonNull(parseClick(by)).get("value"));
-            element.put(action, "click");
+            element.put(action, "CLICK");
             return element;
         }
         return null;
