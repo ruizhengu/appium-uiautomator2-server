@@ -18,16 +18,24 @@ package io.appium.uiautomator2.handler;
 
 import android.util.Log;
 
+import androidx.test.uiautomator.UiObjectNotFoundException;
+
+import java.util.Objects;
+
 import io.appium.uiautomator2.handler.request.SafeRequestHandler;
 import io.appium.uiautomator2.http.AppiumResponse;
 import io.appium.uiautomator2.http.IHttpRequest;
 import io.appium.uiautomator2.model.AndroidElement;
 import io.appium.uiautomator2.model.AppiumUIA2Driver;
 import io.appium.uiautomator2.model.Session;
+import io.appium.uiautomator2.translation.ActionParser;
+import io.appium.uiautomator2.translation.SelectorParser;
+import io.appium.uiautomator2.translation.Translation;
 import io.appium.uiautomator2.utils.Device;
 import io.appium.uiautomator2.utils.Logger;
 
 public class Click extends SafeRequestHandler {
+    private String TAG = "Action: Click";
 
     public Click(String mappedUri) {
         super(mappedUri);
@@ -37,7 +45,9 @@ public class Click extends SafeRequestHandler {
     protected AppiumResponse safeHandle(IHttpRequest request) {
         Session session = AppiumUIA2Driver.getInstance().getSessionOrThrow();
         AndroidElement element = session.getElementsCache().get(getElementId(request));
-        Logger.translation("This is the click action");
+        Logger.translation(TAG, "action: " + element.getBy());
+        Translation statement = new Translation(element.getBy());
+        Logger.translation(statement.getFramework(), statement.getStatement());
         element.click();
         Device.waitForIdle();
         return new AppiumResponse(getSessionId(request));

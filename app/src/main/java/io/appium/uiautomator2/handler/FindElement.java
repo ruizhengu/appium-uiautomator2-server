@@ -30,6 +30,7 @@ import io.appium.uiautomator2.model.ElementsCache;
 import io.appium.uiautomator2.model.api.FindElementModel;
 import io.appium.uiautomator2.model.internal.ElementsLookupStrategy;
 import io.appium.uiautomator2.translation.SelectorParser;
+import io.appium.uiautomator2.translation.Translation;
 import io.appium.uiautomator2.utils.Logger;
 
 import static io.appium.uiautomator2.utils.ElementLocationHelpers.findElement;
@@ -42,6 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FindElement extends SafeRequestHandler {
+    private String TAG = "Action: FindElement";
 
     public FindElement(String mappedUri) {
         super(mappedUri);
@@ -68,11 +70,11 @@ public class FindElement extends SafeRequestHandler {
         if (element == null) {
             throw new ElementNotFoundException();
         }
-        Logger.translation("selector: " + selector);
+        Logger.translation(TAG, "selector: " + selector);
 
-        String parsed = SelectorParser.parseSelector(selector);
+        Translation statement = new Translation(selector);
 
-        Logger.translation(parsed);
+        Logger.translation(statement.getFramework(), statement.getStatement());
 
         AndroidElement androidElement = elementsCache.add(element, true, by, contextId);
         return new AppiumResponse(getSessionId(request), androidElement.toModel());

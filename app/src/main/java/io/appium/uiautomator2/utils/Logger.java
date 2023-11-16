@@ -25,11 +25,12 @@ public class Logger {
 
         for (Object arg : args) {
             if (arg != null) {
-                content.append(arg.toString());
+                content.append(arg);
+                content.append(" ");
             }
         }
 
-        return content.toString();
+        return content.toString().trim();
     }
 
     /**
