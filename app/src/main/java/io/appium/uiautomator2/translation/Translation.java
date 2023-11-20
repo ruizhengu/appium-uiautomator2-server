@@ -65,10 +65,10 @@ public class Translation {
             if (this.action != null) {
                 switch (this.action) {
                     case CLICK:
-                        statement += ".click()";
+                        statement += ".perform(click())";
                         break;
                     case LONG_CLICK:
-                        statement += ".longClick()";
+                        statement += ".perform(longClick())";
                         break;
                 }
             }
